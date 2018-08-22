@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_addtenant"
+            android:icon="@drawable/home2"
+            android:title="Add Tenant" />
+        <item
+            android:id="@+id/nav_edittenant"
+            android:icon="@drawable/pencil"
+            android:title="Edit Tenant" />
+        <item
+            android:id="@+id/nav_profit"
+            android:icon="@drawable/profits"
+            android:title="Profit" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logout"
+            android:title="SIGNOUT" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@drawable/contactdeveloper"
+                android:title="Contact Developer" />
+
+        </menu>
+    </item>
+
+</menu>

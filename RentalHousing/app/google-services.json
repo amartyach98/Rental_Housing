@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "975762805363",
+    "firebase_url": "https://rentalhouse-a3ed9.firebaseio.com",
+    "project_id": "rentalhouse-a3ed9",
+    "storage_bucket": "rentalhouse-a3ed9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975762805363:android:20ecce3d2c94bb8c",
+        "android_client_info": {
+          "package_name": "techworldtechnologies.rentalhousing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975762805363-56uofm4o4h7c2mejuuj93sa2u8mdsiej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "techworldtechnologies.rentalhousing",
+            "certificate_hash": "15e7f677a9c841ea74d432bba88f82d9609c68da"
+          }
+        },
+        {
+          "client_id": "975762805363-9o22r0kf6e4pin7sq7rbq4ko0df5mltd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "techworldtechnologies.rentalhousing",
+            "certificate_hash": "37e300bbbbb000804a0191be3a943c3d2242ca41"
+          }
+        },
+        {
+          "client_id": "975762805363-jtev93jdrnkbc4clp8idtc2e3uust8ni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfj3v6E5grkpr9C9mMC5_gxAh7dPdLPFw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975762805363-jtev93jdrnkbc4clp8idtc2e3uust8ni.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
