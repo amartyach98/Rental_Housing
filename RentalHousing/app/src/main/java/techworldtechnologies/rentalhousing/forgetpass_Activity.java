@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class forgetpass_Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    Button signin;
+    Button rsp;
     EditText txt_email;
     ProgressDialog progressDialog;
     @Override
@@ -28,8 +28,8 @@ public class forgetpass_Activity extends AppCompatActivity {
         progressDialog = new ProgressDialog(forgetpass_Activity.this, R.style.Custom);
         progressDialog.setMessage("Processing..");
         txt_email=(EditText)findViewById(R.id.txt_email);
-        signin=(Button)findViewById(R.id.signin);
-        signin.setOnClickListener(new View.OnClickListener() {
+        rsp=(Button)findViewById(R.id.rsp);
+        rsp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressDialog.show();

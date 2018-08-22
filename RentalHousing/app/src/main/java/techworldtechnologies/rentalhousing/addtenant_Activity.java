@@ -29,15 +29,17 @@ Button next;
                 View mView = layoutInflater.inflate(R.layout.backalertdialog, null);
                 AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(addtenant_Activity.this);
                 alertDialogBuilderUserInput.setView(mView);
-                alertDialogBuilderUserInput.setMessage("Press Cancel to Discard or Back to jump into preious page!!");
+                alertDialogBuilderUserInput.setMessage("Press Cancel to Discard or Back to jump into previous page!!");
                 alertDialogBuilderUserInput
                         .setCancelable(false)
-                        .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Back", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
+                                Intent intent=new Intent(addtenant_Activity.this,main.class);
+                                startActivity(intent);
 
                             }
                         })
-                        .setNegativeButton("Back",
+                        .setNegativeButton("Cancel",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogBox, int id) {
                                         dialogBox.cancel();

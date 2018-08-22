@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -29,7 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Login_Activity extends AppCompatActivity {
-    RelativeLayout rl_forgetpass, rl_newacc;
     EditText txt_email, pass;
     Button signin, googlelogin;
     FirebaseDatabase database;
@@ -41,6 +41,7 @@ public class Login_Activity extends AppCompatActivity {
     String email, password;
     GoogleSignInOptions gso;
     GoogleSignInClient mGoogleSignInClient;
+    TextView cna,fp;
     private static final int RC_SIGN_IN = 9001;
 
 
@@ -58,8 +59,8 @@ public class Login_Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        rl_newacc = (RelativeLayout) findViewById(R.id.rl_newacc);
-        rl_forgetpass = (RelativeLayout) findViewById(R.id.rl_forgetpass);
+        cna=(TextView) findViewById(R.id.cna);
+        fp=(TextView) findViewById(R.id.fp);
         txt_email = (EditText) findViewById(R.id.txt_email);
         googlelogin = (Button) findViewById(R.id.googlelogin);
         pass = (EditText) findViewById(R.id.pass);
@@ -73,14 +74,14 @@ public class Login_Activity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         signin = (Button) findViewById(R.id.signin);
-        rl_forgetpass.setOnClickListener(new View.OnClickListener() {
+        fp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Login_Activity.this, forgetpass_Activity.class);
                 startActivity(intent);
             }
         });
-        rl_newacc.setOnClickListener(new View.OnClickListener() {
+        cna.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Login_Activity.this, Signup_Activity.class);
@@ -100,7 +101,7 @@ public class Login_Activity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 } else if (password.length() < 5) {
                     progressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Password must be 6 character!!",
+                    Toast.makeText(getApplicationContext(), "Password must be of 6 characters!!",
                             Toast.LENGTH_SHORT).show();
                 } else if (email.matches(emailPattern)) {
                     mAuth.signInWithEmailAndPassword(email, password)
