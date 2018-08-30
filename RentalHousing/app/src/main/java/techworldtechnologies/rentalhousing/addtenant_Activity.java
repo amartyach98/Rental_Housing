@@ -11,17 +11,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 
 public class addtenant_Activity extends AppCompatActivity {
-RelativeLayout backcion;
-Button next;
+    RelativeLayout backcion;
+    EditText firstName, lastNAme;
+    String firstname, lastname;
+    Button next;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtennant);
-        next=(Button)findViewById(R.id.next);
-        backcion=(RelativeLayout)findViewById(R.id.backcion);
+        firstName = (EditText) findViewById(R.id.firstName);
+        lastNAme = (EditText) findViewById(R.id.lastName);
+        next = (Button) findViewById(R.id.next);
+        backcion = (RelativeLayout) findViewById(R.id.backcion);
         backcion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,9 +40,8 @@ Button next;
                         .setCancelable(false)
                         .setPositiveButton("Back", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialogBox, int id) {
-                                Intent intent=new Intent(addtenant_Activity.this,main.class);
+                                Intent intent = new Intent(addtenant_Activity.this, main.class);
                                 startActivity(intent);
-
                             }
                         })
                         .setNegativeButton("Cancel",
@@ -44,17 +49,33 @@ Button next;
                                     public void onClick(DialogInterface dialogBox, int id) {
                                         dialogBox.cancel();
                                     }
-                                });
+                                }).setNeutralButton("Discard", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(addtenant_Activity.this, main.class);
+                        startActivity(intent);
+                    }
+                });
 
                 AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                 alertDialogAndroid.show();
             }
         });
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(addtenant_Activity.this,addtenanttwo_activity.class);
-                startActivity(intent);
+                firstname = firstName.getText().toString().trim();
+                lastname = lastNAme.getText().toString().trim();
+                if (firstname.isEmpty() || lastname.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please fill required fields!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(addtenant_Activity.this, addtenanttwo_activity.class);
+                    intent.putExtra("tenant_name", firstname + " " + lastname);
+                    startActivity(intent);
+
+                }
+
             }
         });
 

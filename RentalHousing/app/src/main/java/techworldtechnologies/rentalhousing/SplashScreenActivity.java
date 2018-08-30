@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -21,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                startActivity(intent);
                finish();
            }
-       },1*1000);
+       },1*2000);
 
 
 

@@ -8,6 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:weightSum="6">
 
@@ -32,11 +34,11 @@
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/apptag"
+                android:layout_width="138dp"
+                android:layout_height="132dp"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="67dp"
                 android:background="@drawable/house" />
         </RelativeLayout>
 
@@ -69,7 +71,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="100dp"
                 android:fontFamily="serif"
-                android:text="Developed by Techworld Technologies"
+                android:text="Techworld Technologies"
                 android:textColor="@color/White"
                 android:textSize="19dp"
                 android:textStyle="italic" />

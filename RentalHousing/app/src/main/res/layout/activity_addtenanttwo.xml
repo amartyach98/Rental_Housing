@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -97,7 +96,7 @@
 
 
                         <EditText
-                            android:id="@+id/fName"
+                            android:id="@+id/hno"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
@@ -105,6 +104,8 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="House no"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="@color/Black"
                             android:textColorHint="@color/Black" />
 
@@ -116,7 +117,7 @@
                         android:layout_weight="1">
 
                         <EditText
-                            android:id="@+id/lName"
+                            android:id="@+id/rno"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -124,6 +125,8 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="Room no"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="@color/Black"
                             android:textColorHint="@color/Black" />
 
@@ -159,6 +162,8 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="Room Rent"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="@color/Black"
                             android:textColorHint="@color/Black" />
 
@@ -178,6 +183,8 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="Price/unit"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="@color/Black"
                             android:textColorHint="@color/Black" />
 
@@ -187,7 +194,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/next"
+                    android:id="@+id/addtenant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/price"

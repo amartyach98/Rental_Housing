@@ -97,12 +97,14 @@
 
 
                         <EditText
-                            android:id="@+id/fName"
+                            android:id="@+id/firstName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="10dp"
                             android:backgroundTint="@color/Black"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:ems="10"
                             android:hint="First Name"
                             android:textColor="@color/Black"
@@ -116,13 +118,15 @@
                         android:layout_weight="1">
 
                         <EditText
-                            android:id="@+id/lName"
+                            android:id="@+id/lastName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="15dp"
                             android:backgroundTint="@color/Black"
                             android:ems="10"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:hint="Last Name"
                             android:textColor="@color/Black"
                             android:textColorHint="@color/Black" />

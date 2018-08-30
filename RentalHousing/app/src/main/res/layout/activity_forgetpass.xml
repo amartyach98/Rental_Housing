@@ -44,7 +44,9 @@
                     android:fontFamily="serif"
                     android:text="Rental Housing"
                     android:textColor="#ffffff"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+
+                    />
 
 
             </RelativeLayout>
@@ -96,7 +98,9 @@
                             android:padding="5dp"
                             android:textColor="#B1BCBE"
                             android:textColorHint="#B1BCBE"
-                            android:textSize="20dp" />
+                            android:textSize="20dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"/>
                     </RelativeLayout>
 
 

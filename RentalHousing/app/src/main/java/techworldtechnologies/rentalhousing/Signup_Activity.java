@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +34,8 @@ public class Signup_Activity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myRef;
     FirebaseUser currentFirebaseUser;
+    RelativeLayout rl_showpassimg;
+    ImageView showimgicon;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +46,8 @@ public class Signup_Activity extends AppCompatActivity {
         regpassword = (EditText) findViewById(R.id.reg_password);
         login = (Button) findViewById(R.id.signin);
         mAuth = FirebaseAuth.getInstance();
+        rl_showpassimg=(RelativeLayout)findViewById(R.id.rl_showpassimg);
+        showimgicon=(ImageView)findViewById(R.id.showimgicon);
         progressDialog = new ProgressDialog(Signup_Activity.this, R.style.Custom);
         progressDialog.setMessage("Registering..");
         database = FirebaseDatabase.getInstance();
@@ -87,6 +95,21 @@ public class Signup_Activity extends AppCompatActivity {
                 }
 
 
+            }
+        });
+        //show password
+        rl_showpassimg.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    showimgicon.setBackgroundResource(R.drawable.visible);
+                    regpassword.setTransformationMethod(null);
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    showimgicon.setBackgroundResource(R.drawable.invisible);
+
+                    regpassword.setTransformationMethod(new PasswordTransformationMethod());
+                }
+                return true;
             }
         });
     }

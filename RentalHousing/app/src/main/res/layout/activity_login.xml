@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            android:layout_weight="1">
+            android:layout_weight="0.7">
 
 
         </RelativeLayout>
@@ -56,6 +56,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/email" />
                     </RelativeLayout>
 
@@ -69,16 +70,17 @@
                             android:id="@+id/txt_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:layout_centerVertical="true"
                             android:background="@null"
                             android:hint="Email"
                             android:maxLines="1"
-                            android:padding="7dp"
-                            android:singleLine="true"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="10dp"
                             android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="#B1BCBE"
                             android:textColorHint="#B1BCBE"
-                            android:textSize="15dp" />
+                            android:textSize="20dp" />
                     </RelativeLayout>
 
 
@@ -103,6 +105,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/password" />
                     </RelativeLayout>
 
@@ -112,20 +115,39 @@
                         android:layout_toRightOf="@+id/rl_passimg"
                         android:paddingTop="2dp">
 
+                        <RelativeLayout
+                            android:id="@+id/rl_showpassimg"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/showimgicon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/invisible" />
+                        </RelativeLayout>
+
                         <EditText
                             android:id="@+id/pass"
+                            android:layout_toLeftOf="@+id/rl_showpassimg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:background="@null"
                             android:hint="Password"
-                            android:inputType="textEmailAddress"
-                            android:padding="7dp"
                             android:maxLines="1"
-                            android:singleLine="true"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="10dp"
+                            android:inputType="textPassword"
                             android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="#B1BCBE"
                             android:textColorHint="#B1BCBE"
-                            android:textSize="15dp" />
+                            android:textSize="20dp" />
+
                     </RelativeLayout>
 
 
@@ -142,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="50dp"
                         android:background="@drawable/shape"
                         android:text="Sign In"
                         android:textColor="@color/White" />
@@ -170,7 +192,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/rl_newacc"
-                        android:layout_marginTop="18dp">
+                        android:layout_marginTop="15dp">
 
                         <TextView
 
@@ -189,7 +211,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="10dp">
 
                     <com.shobhitpuri.custombuttons.GoogleSignInButton
                         android:id="@+id/googlelogin"

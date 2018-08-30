@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundimage"
+    android:background="@drawable/room3"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,24 +27,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
 
-            android:layout_weight="4"
-            android:background="#66ffffff">
+            android:layout_weight="4">
 
-            <RelativeLayout
-                android:id="@+id/txt_signin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="serif"
-                    android:text="Rental Housing"
-                    android:textColor="#ffffff"
-                    android:textSize="25dp" />
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,6 +74,8 @@
                             android:hint="Full Name"
                             android:maxLines="1"
                             android:padding="5dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="#B1BCBE"
                             android:textColorHint="#B1BCBE"
                             android:textSize="20dp" />
@@ -128,14 +114,16 @@
 
                         <EditText
                             android:id="@+id/reg_email"
-                            android:inputType="textEmailAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:ems="10"
                             android:hint="Email"
+                            android:inputType="textEmailAddress"
                             android:maxLines="1"
                             android:padding="5dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="#B1BCBE"
                             android:textColorHint="#B1BCBE"
                             android:textSize="20dp" />
@@ -171,15 +159,37 @@
                         android:layout_toRightOf="@+id/rl_passimg"
                         android:paddingTop="2dp">
 
+                        //
+
+                        <RelativeLayout
+                            android:id="@+id/rl_showpassimg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:id="@+id/showimgicon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/invisible" />
+                        </RelativeLayout>
+
                         <EditText
                             android:id="@+id/reg_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/rl_showpassimg"
                             android:background="@null"
-                            android:ems="10"
                             android:hint="Password"
+                            android:inputType="textPassword"
                             android:maxLines="1"
-                            android:padding="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="10dp"
+                            android:scrollHorizontally="true"
+                            android:singleLine="true"
                             android:textColor="#B1BCBE"
                             android:textColorHint="#B1BCBE"
                             android:textSize="20dp" />
@@ -200,7 +210,7 @@
 
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="50dp"
                         android:background="@drawable/shape"
                         android:text="Sign Up" />
 
@@ -210,7 +220,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="15dp">
 
                     <com.shobhitpuri.custombuttons.GoogleSignInButton
                         android:layout_width="wrap_content"

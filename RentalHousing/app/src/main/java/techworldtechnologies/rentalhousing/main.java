@@ -2,9 +2,6 @@ package techworldtechnologies.rentalhousing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,33 +10,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FirebaseUser currentFirebaseUser;
     private FirebaseAuth mAuth;
+
+    RelativeLayout profilepic;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
-
+        currentFirebaseUser = mAuth.getCurrentUser();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        profilepic = (RelativeLayout) findViewById(R.id.profilepic);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -77,7 +87,7 @@ public class main extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_addtenant) {
-            Intent intent=new Intent(main.this,addtenant_Activity.class);
+            Intent intent = new Intent(main.this, addtenant_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_edittenant) {
 
@@ -99,4 +109,7 @@ public class main extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
+
