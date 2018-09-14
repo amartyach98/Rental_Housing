@@ -1,62 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbarlayout"
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#616161"
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#616161">
-
-            <RelativeLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <RelativeLayout
-                    android:id="@+id/searchimg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    android:layout_centerVertical="true">
-
-                    <ImageView
+                    <RelativeLayout
+                        android:id="@+id/searchimg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
 
-                        android:background="@drawable/search" />
+                        android:layout_centerVertical="true">
 
-                </RelativeLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                <RelativeLayout
-                    android:id="@+id/searchedittext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                            android:background="@drawable/search" />
 
-                    android:layout_toRightOf="@id/searchimg">
+                    </RelativeLayout>
 
-                    <EditText
-                        android:layout_width="match_parent"
+                    <RelativeLayout
+                        android:id="@+id/searchedittext"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:hint="Search"
-                        android:maxLines="1" />
+                        android:layout_marginLeft="10dp"
 
+                        android:layout_toRightOf="@id/searchimg">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:hint="Search"
+                            android:maxLines="1" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
-            </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
 
 
-        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

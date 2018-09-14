@@ -130,5 +130,8 @@ public class addtenanttwo_activity extends AppCompatActivity {
         myRef.child("Room_no").child(room_no).setValue(tenantname);
         Toast.makeText(getApplicationContext(), "Success",
                 Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(getApplicationContext(),main.class);
+        startActivity(intent);
+
     }
 }
