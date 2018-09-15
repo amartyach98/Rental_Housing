@@ -1,5 +1,6 @@
 package techworldtechnologies.rentalhousing;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import techworldtechnologies.rentalhousing.Adapter.CustomAdapter;
 import techworldtechnologies.rentalhousing.Pojo.CustomPojo;
@@ -46,6 +49,9 @@ public class main extends AppCompatActivity
     DatabaseReference myRef;
     RecyclerView recyclerView;
     CustomAdapter adapter;
+    int i = 0;
+    String[] sampleString;
+    ProgressDialog progressDialog;
     private ArrayList<CustomPojo> listContentArr = new ArrayList<>();
 
     @Override
@@ -55,11 +61,15 @@ public class main extends AppCompatActivity
 
     }
 
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        progressDialog = new ProgressDialog(main.this, R.style.Custom);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -78,28 +88,14 @@ public class main extends AppCompatActivity
         profilepic = (RelativeLayout) findViewById(R.id.profilepic);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        myRef.child("Tenant").child(currentFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // txt_cuser_email.setText(dataSnapshot.child("Email").getValue().toString());
-                //txt_cuser_name.setText(dataSnapshot.child("Full_name").getValue().toString());
-                valcount = (int) dataSnapshot.getChildrenCount();
-                //  Toast.makeText(getApplicationContext(), String.valueOf(tenant_count), Toast.LENGTH_LONG).show();
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this,
                 recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, final int position) {
-                //Values are passing to activity & to fragment as well
+
                 Toast.makeText(main.this, "Single Click on position :" + position,
                         Toast.LENGTH_SHORT).show();
 
@@ -113,7 +109,6 @@ public class main extends AppCompatActivity
         }));
 
         adapter = new CustomAdapter(main.this);
-        //Method call for populating the view
 
         populateRecyclerViewValues();
 
@@ -122,22 +117,44 @@ public class main extends AppCompatActivity
 
 
     public void populateRecyclerViewValues() {
+        myRef.child("Tenant").child(currentFirebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-        Toast.makeText(getApplicationContext(), String.valueOf(valcount), Toast.LENGTH_LONG).show();
-        for (long iter = 0; iter <= 50; iter++) {
+                // txt_cuser_email.setText(dataSnapshot.child("Email").getValue().toString());
+                //txt_cuser_name.setText(dataSnapshot.child("Full_name").getValue().toString());
+                valcount = (int) dataSnapshot.getChildrenCount();
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
 
-            CustomPojo pojoObject = new CustomPojo();
+                sampleString = new String[valcount];
+                while (i < valcount) {
+                    sampleString[i] = iterator.next().getKey().toString();
+                    Log.d(Integer.toString(i), sampleString[i]);
+                    String hno = dataSnapshot.child(sampleString[i]).child("House_no").getValue().toString();
+                    Log.d("HNO:::::::", hno);
+                    CustomPojo pojoObject = new CustomPojo();
 
-            pojoObject.setName("Hari Vigensh Jayapalan");
-            pojoObject.setContent("Hello RecyclerView! item: " + iter);
+                    pojoObject.setName(sampleString[i]);
+                    pojoObject.setContent("House Number: " + hno);
 
 
-            listContentArr.add(pojoObject);
-        }
+                    listContentArr.add(pojoObject);
+                    adapter.setListContent(listContentArr);
 
-        adapter.setListContent(listContentArr);
+                    recyclerView.setAdapter(adapter);
+                    i++;
+                }
+                progressDialog.dismiss();
 
-        recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     public static interface ClickListener {
