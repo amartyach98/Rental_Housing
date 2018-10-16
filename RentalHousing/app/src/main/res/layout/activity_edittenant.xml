@@ -23,7 +23,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/back" />
+                    android:background="@drawable/fullname" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Details"
+                    android:text="Tenant Name"
                     android:textColor="@color/White"
                     android:textCursorDrawable="@color/White"
                     android:textSize="20dp" />
@@ -49,9 +49,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:background="@drawable/room1"
+        android:background="@drawable/singleroom"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:weightSum="3">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/upperrl"
@@ -70,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Enter other Details"
+                    android:text="Enter Details"
                     android:textColor="@color/Black"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -90,25 +94,10 @@
                     android:weightSum="2">
 
                     <RelativeLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_weight="1">
 
-
-                        <EditText
-                            android:id="@+id/hno"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-
-                            android:backgroundTint="@color/Black"
-                            android:ems="10"
-                            android:hint="House no"
-                            android:scrollHorizontally="true"
-                            android:singleLine="true"
-                            android:textColor="@color/Black"
-                            android:textColorHint="@color/Black" />
 
                     </RelativeLayout>
 
@@ -122,8 +111,6 @@
 
                 </LinearLayout>
 
-
-                //
 
                 <LinearLayout
 
@@ -170,7 +157,7 @@
                             android:layout_marginRight="15dp"
                             android:backgroundTint="@color/Black"
                             android:ems="10"
-                            android:hint="Price/unit"
+                            android:hint="Price per Unit"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
                             android:textColor="@color/Black"
@@ -190,7 +177,7 @@
                     android:layout_marginRight="12dp"
                     android:layout_marginTop="25dp"
                     android:background="@drawable/shape"
-                    android:text="ADD TENANT"
+                    android:text="EDIT TENANT'S DATA"
                     android:textColor="@color/White" />
             </RelativeLayout>
         </RelativeLayout>
@@ -199,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#66ffffff"></RelativeLayout>
+            ></RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package techworldtechnologies.rentalhousing;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,19 +10,21 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,11 +43,12 @@ import techworldtechnologies.rentalhousing.Pojo.CustomPojo;
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView txt_cuser_email, txt_cuser_name;
+    TextView txt_cuser_email, txt_cuser_name, txt_tenantname, txt_tenanthouseno;
     FirebaseUser currentFirebaseUser;
     private FirebaseAuth mAuth;
     public int valcount;
-    RelativeLayout profilepic;
+    ImageView rl_edit, rl_delete;
+    RelativeLayout profilepic, rl_del_img;
     FirebaseDatabase database;
     DatabaseReference myRef;
     RecyclerView recyclerView;
@@ -72,7 +76,7 @@ public class main extends AppCompatActivity
         progressDialog.show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        rl_del_img = (RelativeLayout) findViewById(R.id.rl_del_img);
         //txt_cuser_email = (TextView) findViewById(R.id.txt_cuser_email);
         // txt_cuser_name = (TextView) findViewById(R.id.txt_cuser_name);
         mAuth = FirebaseAuth.getInstance();
@@ -86,6 +90,7 @@ public class main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         profilepic = (RelativeLayout) findViewById(R.id.profilepic);
+
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
@@ -96,22 +101,57 @@ public class main extends AppCompatActivity
             @Override
             public void onClick(View view, final int position) {
 
-                Toast.makeText(main.this, "Single Click on position :" + position,
-                        Toast.LENGTH_SHORT).show();
+                // check if item still exists
+                if (position != RecyclerView.NO_POSITION) {
+                    CustomPojo clickedDataItem = listContentArr.get(position);
+                    String house_number = clickedDataItem.getContent().substring(clickedDataItem.getContent().lastIndexOf(":") + 1);
+                    // Toast.makeText(getApplicationContext(), "Tenant Name " + clickedDataItem.getName(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getApplicationContext(), "House Number " + clickedDataItem.getContent(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(main.this, addpaymentActivity.class);
+                    intent.putExtra("tenant_name", clickedDataItem.getName());
+                    intent.putExtra("house_no", house_number);
+                    startActivity(intent);
+
+
+                }
 
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(main.this, "Long press on position :" + position,
-                        Toast.LENGTH_LONG).show();
+                //delete code here
             }
         }));
 
         adapter = new CustomAdapter(main.this);
 
         populateRecyclerViewValues();
+        rl_del_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater layoutInflater = LayoutInflater.from(main.this);
+                View mView = layoutInflater.inflate(R.layout.backalertdialog, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(main.this);
+                alertDialogBuilderUserInput.setView(mView);
+                alertDialogBuilderUserInput.setMessage("Do you want to Delete this Tenant?");
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
 
+                            }
+                        })
+                        .setNegativeButton("No",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+            }
+        });
 
     }
 
@@ -133,7 +173,7 @@ public class main extends AppCompatActivity
                     String hno = dataSnapshot.child(sampleString[i]).child("House_no").getValue().toString();
                     Log.d("HNO:::::::", hno);
                     CustomPojo pojoObject = new CustomPojo();
-
+                    //Setting tenant name & house no
                     pojoObject.setName(sampleString[i]);
                     pojoObject.setContent("House Number: " + hno);
 
@@ -142,7 +182,9 @@ public class main extends AppCompatActivity
                     adapter.setListContent(listContentArr);
 
                     recyclerView.setAdapter(adapter);
+
                     i++;
+
                 }
                 progressDialog.dismiss();
 

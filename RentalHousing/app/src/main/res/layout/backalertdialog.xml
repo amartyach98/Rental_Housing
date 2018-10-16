@@ -3,5 +3,6 @@
     android:id="@+id/custom_dialog_layout_design_user_input"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     android:orientation="vertical">
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -23,9 +24,9 @@ import java.util.HashMap;
 public class addtenanttwo_activity extends AppCompatActivity {
     String tenantname;
     RelativeLayout backcion;
-    EditText hno, rno, roomrent, priceperunit;
+    EditText hno, roomrent, priceperunit;
     Button addtenant;
-    String house_no, room_no, room_rent, price_per_unit;
+    String house_no, room_rent, price_per_unit;
     FirebaseDatabase database;
     DatabaseReference myRef;
     FirebaseUser currentFirebaseUser;
@@ -37,7 +38,6 @@ public class addtenanttwo_activity extends AppCompatActivity {
         setContentView(R.layout.activity_addtenanttwo);
         backcion = (RelativeLayout) findViewById(R.id.backcion);
         hno = (EditText) findViewById(R.id.hno);
-        rno = (EditText) findViewById(R.id.rno);
         roomrent = (EditText) findViewById(R.id.roomrent);
         priceperunit = (EditText) findViewById(R.id.priceperunit);
         addtenant = (Button) findViewById(R.id.addtenant);
@@ -67,13 +67,13 @@ public class addtenanttwo_activity extends AppCompatActivity {
                                         dialogBox.cancel();
                                     }
                                 }).setNeutralButton("Discard", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent  intent=new Intent(addtenanttwo_activity.this,main.class);
-                                startActivity(intent);
-                            }
-                        });
-                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(addtenanttwo_activity.this, main.class);
+                        startActivity(intent);
+                    }
+                });
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                 alertDialogAndroid.show();
             }
         });
@@ -81,10 +81,9 @@ public class addtenanttwo_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 house_no = hno.getText().toString().trim();
-                room_no = rno.getText().toString().trim();
                 room_rent = roomrent.getText().toString().trim();
                 price_per_unit = priceperunit.getText().toString().trim();
-                if (house_no.isEmpty() || room_no.isEmpty() || room_rent.isEmpty() || price_per_unit.isEmpty()) {
+                if (house_no.isEmpty() || room_rent.isEmpty() || price_per_unit.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please fill required fields!!",
                             Toast.LENGTH_SHORT).show();
                 } else {
@@ -111,27 +110,32 @@ public class addtenanttwo_activity extends AppCompatActivity {
             int ppu = Integer.parseInt(price_per_unit);
             tenantadd();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Room rent & Price per unit must be NUMERIC!!",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Room rent & Price per unit must be NUMERIC!!", Toast.LENGTH_SHORT).show();
+
 
         }
     }
 
     public void tenantadd() {
+        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
         HashMap<String, String> dataMap = new HashMap<String, String>();
 
         dataMap.put("House_no", house_no);
-        dataMap.put("Room_no", room_no);
         dataMap.put("Room_rent", room_rent);
         dataMap.put("Price_per_unit", price_per_unit);
 
         myRef.child("Tenant").child(currentFirebaseUser.getUid()).child(tenantname).setValue(dataMap);
-        myRef.child("Room_no").child(room_no).setValue(tenantname);
-        Toast.makeText(getApplicationContext(), "Success",
-                Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(getApplicationContext(),main.class);
+        myRef.child("House_no").child(house_no).setValue(tenantname);
+        for(int i = 0; i < months.length; i++){
+            myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(house_no).child(months[i]).child("amt").setValue(room_rent);
+            myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(house_no).child(months[i]).child("ebill").setValue(price_per_unit);
+            myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(house_no).child(months[i]).child("Due").setValue("0");
+        }
+        Intent intent = new Intent(getApplicationContext(), main.class);
         startActivity(intent);
 
     }
 }
+
+

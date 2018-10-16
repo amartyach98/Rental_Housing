@@ -42,6 +42,7 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:layout_toLeftOf="@+id/rl_del_img"
                         android:id="@+id/searchedittext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -56,6 +57,18 @@
                             android:hint="Search"
                             android:maxLines="1" />
 
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_del_img"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/delete"/>
                     </RelativeLayout>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>

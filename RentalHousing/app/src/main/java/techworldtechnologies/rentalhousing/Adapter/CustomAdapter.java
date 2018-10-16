@@ -33,6 +33,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = inflater.inflate(R.layout.recycler_row_layout, parent, false);
         holder = new MyViewHolder(view);
+
         return holder;
     }
 
@@ -42,7 +43,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         CustomPojo list_items = list_members.get(position);
         holder.txt_tenantname.setText(list_items.getName());
         holder.txt_tenanthouseno.setText(list_items.getContent());
-
     }
 
     //Setting the arraylist
@@ -63,7 +63,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txt_tenantname, txt_tenanthouseno;
 
-        public MyViewHolder(View itemView) {
+
+        public MyViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             txt_tenantname = (TextView) itemView.findViewById(R.id.txt_tenantname);
@@ -74,7 +75,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         @Override
         public void onClick(View v) {
-
         }
     }
 
