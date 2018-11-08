@@ -27,20 +27,20 @@ import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 public class addpaymentActivity extends AppCompatActivity {
-    EditText unit, amtp;
+    EditText unit;
     TextView roomrent, electricbill, toolbartname;
     RelativeLayout done;
     String tenantname, housenumber;
     String actualroomrent, actualpriceperunit;
+    String due;
     FirebaseUser currentFirebaseUser;
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    int tbp;
     ProgressDialog progressDialog;
 
-    String month, amtpaid;
-    int totalamttobepaid;
-    int price_per_unit;
+    String month;
 
     @Override
     protected void onStart() {
@@ -52,7 +52,6 @@ public class addpaymentActivity extends AppCompatActivity {
         toolbartname.setText(tenantname);
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH);
-        //Toast.makeText(getApplicationContext(), housenumber, Toast.LENGTH_LONG).show();
 
 
         getMonthForInt(month);
@@ -68,7 +67,6 @@ public class addpaymentActivity extends AppCompatActivity {
         //toolbartname.setText(tenantname);
         progressDialog = new ProgressDialog(addpaymentActivity.this, R.style.Custom);
         progressDialog.setMessage("Fetching Data...");
-        amtp = (EditText) findViewById(R.id.amtp);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +79,52 @@ public class addpaymentActivity extends AppCompatActivity {
                 if (unit.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Price Per Unit cannot be blank!!", Toast.LENGTH_LONG).show();
                 } else {
-                    intcheck();
+                    myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            tbp = Integer.parseInt(roomrent.getText().toString().trim()) + Integer.parseInt(unit.getText().toString().trim()) * Integer.parseInt(electricbill.getText().toString().trim());
+
+
+                            LayoutInflater layoutInflater = LayoutInflater.from(addpaymentActivity.this);
+                            View mView = layoutInflater.inflate(R.layout.backalertdialog, null);
+                            AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(addpaymentActivity.this);
+                            alertDialogBuilderUserInput.setView(mView);
+                            if (dataSnapshot.hasChild("Paid")) {
+                                alertDialogBuilderUserInput.setMessage("Total amount to be paid :" + dataSnapshot.child("Tobepaid").getValue().toString() + "\n" + "Room-Rent :" + dataSnapshot.child("amt").getValue().toString() + "\n" + "Electric Bill : " + (Integer.parseInt(unit.getText().toString()) * Integer.parseInt(dataSnapshot.child("ebill").getValue().toString()) + "\n" + "Paid :" + dataSnapshot.child("Paid").getValue().toString() + "\n" + "Due :" + dataSnapshot.child("Due").getValue().toString()));
+                            } else {
+                                alertDialogBuilderUserInput.setMessage("Total amount to be paid :" + tbp + "\n" + "Room-Rent :" + dataSnapshot.child("amt").getValue().toString() + "\n" + "Electric Bill : " + (Integer.parseInt(unit.getText().toString()) * Integer.parseInt(dataSnapshot.child("ebill").getValue().toString()) + "\n" + "Paid :" + "0"));
+                            }
+
+                            alertDialogBuilderUserInput
+                                    .setCancelable(false)
+                                    .setPositiveButton("Save Reading", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialogBox, int id) {
+                                            //save to db
+                                            myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("Ereading").setValue(unit.getText().toString().trim());
+                                            myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("Tobepaid").setValue(tbp);
+
+                                            dialogBox.dismiss();
+                                            paymentdialog(tbp);
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialogBox, int id) {
+                                                    dialogBox.cancel();
+                                                }
+                                            });
+
+                            AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                            alertDialogAndroid.show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 }
 
             }
@@ -89,53 +132,6 @@ public class addpaymentActivity extends AppCompatActivity {
 
     }
 
-    //on click tick
-    public void alertdilog() {
-        LayoutInflater layoutInflater = LayoutInflater.from(addpaymentActivity.this);
-        View mView = layoutInflater.inflate(R.layout.backalertdialog, null);
-        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(addpaymentActivity.this);
-        alertDialogBuilderUserInput.setView(mView);
-        totalamttobepaid = (price_per_unit * Integer.parseInt(actualpriceperunit)) + Integer.parseInt(actualroomrent);
-        alertDialogBuilderUserInput.setMessage("Total amount to be paid : " + totalamttobepaid + "\n" + "Electric Bill : " + (price_per_unit * Integer.parseInt(actualpriceperunit) + "\n" + "Room Rent : " + Integer.parseInt(actualroomrent)));
-        alertDialogBuilderUserInput
-                .setCancelable(false)
-                .setNeutralButton("Save Reading", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("ereading").setValue(price_per_unit);
-                        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("To_Be_Paid").setValue(totalamttobepaid);
-                        LayoutInflater layoutInflater = LayoutInflater.from(addpaymentActivity.this);
-                        View mView = layoutInflater.inflate(R.layout.payment_alert_dialog, null);
-                        AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(addpaymentActivity.this);
-                        alertDialogBuilderUserInput.setView(mView);
-                        alertDialogBuilderUserInput.setMessage("");
-                        alertDialogBuilderUserInput
-                                .setCancelable(false)
-                                .setPositiveButton("Paid", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialogBox, int id) {
-
-                                    }
-                                })
-                                .setNegativeButton("Later",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialogBox, int id) {
-                                                dialogBox.cancel();
-                                            }
-                                        });
-
-                        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-                        alertDialogAndroid.show();
-                    }
-                }).setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogBox, int id) {
-                        dialogBox.cancel();
-                    }
-                });
-
-        AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
-        alertDialogAndroid.show();
-    }
 
     public void getMonthForInt(int num) {
         month = "wrong";
@@ -148,8 +144,8 @@ public class addpaymentActivity extends AppCompatActivity {
         myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("ereading")) {
-                    unit.setText(dataSnapshot.child("ereading").getValue().toString());
+                if (dataSnapshot.hasChild("Ereading")) {
+                    unit.setText(dataSnapshot.child("Ereading").getValue().toString());
                     unit.setFocusable(false);
                 }
             }
@@ -184,26 +180,69 @@ public class addpaymentActivity extends AppCompatActivity {
         });
     }
 
-    public void intcheck() {
-        try {
-            price_per_unit = Integer.parseInt(unit.getText().toString().trim());
-            alertdilog();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Price per unit must be NUMERIC!!", Toast.LENGTH_SHORT).show();
+    public void paymentdialog(final int tbp) {
+        //for validating input
+        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
 
-        }
+                LayoutInflater layoutInflater = LayoutInflater.from(addpaymentActivity.this);
+                View mView = layoutInflater.inflate(R.layout.payment_alert_dialog, null);
+                AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(addpaymentActivity.this);
+                alertDialogBuilderUserInput.setView(mView);
+                final EditText userInputDialogEditText = (EditText) mView.findViewById(R.id.userInputDialog);
+                alertDialogBuilderUserInput
+                        .setCancelable(false)
+                        .setPositiveButton("Paid", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialogBox, int id) {
+                                if (userInputDialogEditText.getText().toString().isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), "Please fill the amount", Toast.LENGTH_LONG).show();
+                                } else if (dataSnapshot.hasChild("Paid")) {
+                                    if (Integer.parseInt(dataSnapshot.child("Due").getValue().toString()) < Integer.parseInt(userInputDialogEditText.getText().toString().trim())) {
+                                        Toast.makeText(getApplicationContext(), "Please Enter Valid Input", Toast.LENGTH_LONG).show();
+                                        dialogBox.dismiss();
+                                    } else {
+                                        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("Paid").setValue(Integer.parseInt(dataSnapshot.child("Paid").getValue().toString()) + Integer.parseInt(userInputDialogEditText.getText().toString().trim()));
+                                        int due = tbp-(Integer.parseInt(dataSnapshot.child("Paid").getValue().toString()) + Integer.parseInt(userInputDialogEditText.getText().toString().trim()));
+                                        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("Due").setValue(due);
+                                        dialogBox.dismiss();
+                                    }
+                                } else {
+                                    if (Integer.parseInt(dataSnapshot.child("Tobepaid").getValue().toString()) < Integer.parseInt(userInputDialogEditText.getText().toString().trim())) {
+                                        Toast.makeText(getApplicationContext(), "Please Enter Valid Input..", Toast.LENGTH_LONG).show();
+                                        dialogBox.dismiss();
+                                    } else {
+                                        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("Paid").setValue(userInputDialogEditText.getText().toString().trim());
+                                        int due = tbp - Integer.parseInt(userInputDialogEditText.getText().toString().trim());
+                                        myRef.child("RoomRent").child(currentFirebaseUser.getUid()).child(housenumber.trim()).child(month.trim()).child("Due").setValue(due);
+                                        dialogBox.dismiss();
+                                    }
+                                    //Toast.makeText(getApplicationContext(), Integer.toString(test), Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        })
+                        .setNegativeButton("Later",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogBox, int id) {
+                                        dialogBox.cancel();
+                                    }
+                                });
+
+                AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
+                alertDialogAndroid.show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
-    public void intchandmakepayment() {
-        try {
-
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Price per unit must be NUMERIC!!", Toast.LENGTH_SHORT).show();
-
-
-        }
-    }
 }
 
 

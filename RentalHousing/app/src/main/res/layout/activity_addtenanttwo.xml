@@ -92,7 +92,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:focusableInTouchMode="true"
                         android:layout_weight="1">
 
 
@@ -105,6 +105,7 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="House no"
+                            android:inputType="number"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
                             android:textColor="@color/Black"
@@ -138,6 +139,7 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:focusableInTouchMode="true"
                         android:layout_weight="1">
 
 
@@ -150,6 +152,7 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="Room Rent"
+                            android:inputType="number"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
                             android:textColor="@color/Black"
@@ -160,6 +163,7 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:focusableInTouchMode="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -171,6 +175,7 @@
                             android:backgroundTint="@color/Black"
                             android:ems="10"
                             android:hint="Price/unit"
+                            android:inputType="number"
                             android:scrollHorizontally="true"
                             android:singleLine="true"
                             android:textColor="@color/Black"

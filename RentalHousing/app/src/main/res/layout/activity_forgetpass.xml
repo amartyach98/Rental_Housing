@@ -83,6 +83,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:focusableInTouchMode="true"
                         android:layout_toRightOf="@+id/rl_emailimg"
                         android:paddingTop="2dp">
 
